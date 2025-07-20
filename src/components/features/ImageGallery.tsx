@@ -77,7 +77,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         <div className="relative">
           <div 
             ref={imageRef}
-            className="relative aspect-square md:aspect-[4/3] max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group"
+            className="relative aspect-square md:aspect-[4/3] w-full max-w-sm md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group"
             onClick={() => setIsFullscreen(true)}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
