@@ -173,11 +173,12 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 transition-all z-10"
+            className="absolute top-4 right-4 bg-white/95 hover:bg-white text-black rounded-lg px-4 py-3 transition-all z-10 shadow-xl border border-gray-300 flex items-center gap-2"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
             </svg>
+            <span className="text-sm font-medium hidden sm:inline">Close</span>
           </button>
 
           {/* Fullscreen Image */}

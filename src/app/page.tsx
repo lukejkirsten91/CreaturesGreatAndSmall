@@ -135,6 +135,20 @@ export default function Home() {
             </blockquote>
             <cite className="text-lg text-gray-300">– Steve Kirsten</cite>
           </div>
+
+          {/* Steve's Hero Image */}
+          <div className="mb-12 section-animate">
+            <div className="relative max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl">
+              <Image
+                src="/images/hero/20250720_114142.jpg"
+                alt="Steve Kirsten with his Railway People sculptures"
+                width={1200}
+                height={800}
+                className="w-full h-auto object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+              />
+            </div>
+          </div>
           
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Story Column */}
