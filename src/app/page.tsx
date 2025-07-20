@@ -120,9 +120,24 @@ export default function Home() {
       <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm section-animate">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
               Meet Steve Kirsten
             </h2>
+            
+            {/* Steve's Hero Image - directly under heading */}
+            <div className="mb-8 section-animate">
+              <div className="relative max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl">
+                <Image
+                  src="/images/hero/20250720_114142.jpg"
+                  alt="Steve Kirsten with his Railway People sculptures"
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                />
+              </div>
+            </div>
+            
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Turning scrap metal into whimsical creatures and creations
             </p>
@@ -134,20 +149,6 @@ export default function Home() {
               "The more I do this, the more I see potential in all sorts of weird and odd bits of scrap metal."
             </blockquote>
             <cite className="text-lg text-gray-300">– Steve Kirsten</cite>
-          </div>
-
-          {/* Steve's Hero Image */}
-          <div className="mb-12 section-animate">
-            <div className="relative max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl">
-              <Image
-                src="/images/hero/20250720_114142.jpg"
-                alt="Steve Kirsten with his Railway People sculptures"
-                width={1200}
-                height={800}
-                className="w-full h-auto object-cover"
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-              />
-            </div>
           </div>
           
           <div className="grid lg:grid-cols-2 gap-12 items-start">
