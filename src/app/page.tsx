@@ -117,48 +117,91 @@ export default function Home() {
 
       {/* About Section */}
       <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              About the Artist
+              Meet Steve Kirsten
             </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Turning scrap metal into whimsical creatures and creations
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Featured Quote */}
+          <div className="text-center mb-12">
+            <blockquote className="text-2xl md:text-3xl font-light text-amber-400 italic mb-4">
+              "The more I do this, the more I see potential in all sorts of weird and odd bits of scrap metal."
+            </blockquote>
+            <cite className="text-lg text-gray-300">– Steve Kirsten</cite>
+          </div>
+          
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            {/* Story Column */}
             <div className="space-y-6">
               <p className="text-lg text-gray-200 leading-relaxed">
-                In the heart of South Africa, where the landscape tells stories of resilience 
-                and transformation, an artist works with his hands to breathe new life into 
-                materials that others have discarded.
+                With an eye for detail and a love for craftsmanship, Steve Kirsten transforms discarded 
+                metal into imaginative sculptures and unique works of art. From small, intricate figures 
+                to larger statement pieces, each creation carries its own personality and charm.
               </p>
               
               <p className="text-lg text-gray-200 leading-relaxed">
-                Each piece begins as scrap - old machinery, forgotten hardware, discarded 
-                metal fragments - but emerges as something entirely new: creatures with 
-                personality, character, and soul.
+                Steve's journey began after qualifying at Saasveld Forestry College in 1977. 
+                <em className="text-amber-300"> "I was born in Benoni and completed my army training after school,"</em> he says. 
+                <em className="text-amber-300"> "I then operated a metal lathe in a steel factory to fund a few months of 
+                hitchhiking across Europe."</em> Years later, he returned to his roots on the Garden Route 
+                and discovered the immense satisfaction of turning scrap metal into extraordinary pieces.
               </p>
               
               <p className="text-lg text-gray-200 leading-relaxed">
-                These sculptures carry the industrial heritage of South Africa while pointing 
-                toward a future where waste becomes wonder, found across markets throughout 
-                the country.
+                Originally crafting wooden garden benches, Steve soon found himself drawn to metalwork. 
+                <em className="text-amber-300"> "These were big and cumbersome,"</em> he recalls. 
+                <em className="text-amber-300"> "I had a friend who traded at markets and asked his advice on what products 
+                I could sell. He queried whether they had to be made of wood – which changed my whole mindset. 
+                I already had all the necessary tools, so I started researching metal as a medium."</em>
+              </p>
+              
+              <p className="text-lg text-gray-200 leading-relaxed">
+                Inspired by the shapes and textures of salvaged materials, Steve continues to experiment 
+                and innovate with every project, seeing potential where others see waste.
               </p>
             </div>
             
-            <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 backdrop-blur-sm rounded-lg p-8 border border-amber-500/20">
-              <h3 className="text-2xl font-bold text-amber-400 mb-4">Heritage & Sustainability</h3>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-white mb-2">Knysna Railway Heritage</h4>
-                  <p className="text-gray-300">
-                    Using authentic railway screws preserves South African industrial history in artistic form.
-                  </p>
+            {/* Info Boxes Column */}
+            <div className="space-y-6">
+              <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 backdrop-blur-sm rounded-lg p-8 border border-amber-500/20">
+                <h3 className="text-2xl font-bold text-amber-400 mb-4">Heritage & Sustainability</h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Knysna Railway Heritage</h4>
+                    <p className="text-gray-300">
+                      Using authentic railway screws preserves South African industrial history in artistic form.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Environmental Impact</h4>
+                    <p className="text-gray-300">
+                      Every sculpture prevents metal from ending up in landfills, turning waste into wonder.
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-2">Environmental Impact</h4>
-                  <p className="text-gray-300">
-                    Every sculpture prevents metal from ending up in landfills, turning waste into wonder.
-                  </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-teal-900/40 to-cyan-900/40 backdrop-blur-sm rounded-lg p-8 border border-teal-500/20">
+                <h3 className="text-2xl font-bold text-teal-400 mb-4">Find Steve's Work</h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Mosaic Market, Sedgefield</h4>
+                    <p className="text-gray-300">
+                      Visit Steve at his stall, <strong>Creatures Great and Small</strong>, 
+                      every Saturday morning to see his fantastical creatures and objets d'art on display.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">Garden Route Markets</h4>
+                    <p className="text-gray-300">
+                      Steve's unique sculptures can be found at various markets throughout the Garden Route region.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -197,7 +240,7 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-white mb-2">Email Contact</h3>
                 <p className="text-gray-300 mb-4">For custom commissions and inquiries</p>
                 <a 
-                  href="mailto:contact@example.com" 
+                  href="mailto:stavroskirsten@gmail.com" 
                   className="inline-flex items-center gap-2 bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition-all transform hover:scale-105"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
