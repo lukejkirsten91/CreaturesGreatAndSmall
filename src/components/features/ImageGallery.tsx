@@ -77,7 +77,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         <div className="relative">
           <div 
             ref={imageRef}
-            className="relative aspect-square md:aspect-[4/3] w-full max-w-sm md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group"
+            className="relative aspect-square md:aspect-[4/3] w-full max-w-sm md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group gallery-main"
             onClick={() => setIsFullscreen(true)}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -143,7 +143,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               <button
                 key={image.id}
                 onClick={() => setSelectedIndex(index)}
-                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all ${
+                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all thumbnail-animate ${
                   index === selectedIndex 
                     ? 'ring-4 ring-amber-400 scale-110' 
                     : 'opacity-60 hover:opacity-100 hover:scale-105'

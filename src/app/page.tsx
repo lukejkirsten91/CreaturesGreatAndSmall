@@ -53,7 +53,7 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center hero-content">
           <h1 className="text-4xl md:text-7xl lg:text-8xl font-bold text-white mb-6 drop-shadow-2xl">
             Creatures Great and Small
           </h1>
@@ -74,7 +74,7 @@ export default function Home() {
       </section>
 
       {/* The Screw Heritage Section */}
-      <section className="py-16 px-4 bg-gray-800/80 backdrop-blur-sm">
+      <section className="py-16 px-4 bg-gray-800/80 backdrop-blur-sm section-animate">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
             The Foundation: Historic Railway Screws
@@ -100,7 +100,7 @@ export default function Home() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-16 px-4">
+      <section id="gallery" className="py-16 px-4 section-animate">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -117,7 +117,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm">
+      <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm section-animate">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -129,7 +129,7 @@ export default function Home() {
           </div>
           
           {/* Featured Quote */}
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 quote-animate">
             <blockquote className="text-2xl md:text-3xl font-light text-amber-400 italic mb-4">
               "The more I do this, the more I see potential in all sorts of weird and odd bits of scrap metal."
             </blockquote>
@@ -139,13 +139,13 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Story Column */}
             <div className="space-y-6">
-              <p className="text-lg text-gray-200 leading-relaxed text-justify">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
                 With an eye for detail and a love for craftsmanship, Steve Kirsten transforms discarded 
                 metal into imaginative sculptures and unique works of art. From small, intricate figures 
                 to larger statement pieces, each creation carries its own personality and charm.
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed text-justify">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
                 Steve's journey began after qualifying at Saasveld Forestry College in 1977. 
                 <em className="text-amber-300"> "I was born in Benoni and completed my army training after school,"</em> he says. 
                 <em className="text-amber-300"> "I then operated a metal lathe in a steel factory to fund a few months of 
@@ -153,7 +153,7 @@ export default function Home() {
                 and discovered the immense satisfaction of turning scrap metal into extraordinary pieces.
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed text-justify">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
                 Originally crafting wooden garden benches, Steve soon found himself drawn to metalwork. 
                 <em className="text-amber-300"> "These were big and cumbersome,"</em> he recalls. 
                 <em className="text-amber-300"> "I had a friend who traded at markets and asked his advice on what products 
@@ -161,7 +161,7 @@ export default function Home() {
                 I already had all the necessary tools, so I started researching metal as a medium."</em>
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed text-justify">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
                 Inspired by the shapes and textures of salvaged materials, Steve continues to experiment 
                 and innovate with every project, seeing potential where others see waste.
               </p>
@@ -169,7 +169,7 @@ export default function Home() {
             
             {/* Info Boxes Column */}
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 backdrop-blur-sm rounded-lg p-8 border border-amber-500/20">
+              <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 backdrop-blur-sm rounded-lg p-8 border border-amber-500/20 info-box-animate">
                 <h3 className="text-2xl font-bold text-amber-400 mb-4">Heritage & Sustainability</h3>
                 <div className="space-y-4">
                   <div>
@@ -187,7 +187,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-gradient-to-br from-teal-900/40 to-cyan-900/40 backdrop-blur-sm rounded-lg p-8 border border-teal-500/20">
+              <div className="bg-gradient-to-br from-teal-900/40 to-cyan-900/40 backdrop-blur-sm rounded-lg p-8 border border-teal-500/20 info-box-animate">
                 <h3 className="text-2xl font-bold text-teal-400 mb-4">Find Steve's Work</h3>
                 <div className="space-y-4">
                   <div>
@@ -211,7 +211,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 px-4">
+      <section id="contact" className="py-16 px-4 contact-animate">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Connect & Collect
