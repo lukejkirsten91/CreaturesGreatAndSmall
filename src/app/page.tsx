@@ -44,7 +44,7 @@ export default function Home() {
             src="/images/hero/20250720_114142.jpg"
             alt="Railway People sculptures hero image"
             fill
-            className="object-cover opacity-40"
+            className="object-cover object-center md:object-[center_30%] opacity-40"
             sizes="100vw"
             priority
           />
@@ -65,7 +65,7 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
@@ -138,13 +138,13 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Story Column */}
             <div className="space-y-6">
-              <p className="text-lg text-gray-200 leading-relaxed">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify">
                 With an eye for detail and a love for craftsmanship, Steve Kirsten transforms discarded 
                 metal into imaginative sculptures and unique works of art. From small, intricate figures 
                 to larger statement pieces, each creation carries its own personality and charm.
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify">
                 Steve's journey began after qualifying at Saasveld Forestry College in 1977. 
                 <em className="text-amber-300"> "I was born in Benoni and completed my army training after school,"</em> he says. 
                 <em className="text-amber-300"> "I then operated a metal lathe in a steel factory to fund a few months of 
@@ -152,7 +152,7 @@ export default function Home() {
                 and discovered the immense satisfaction of turning scrap metal into extraordinary pieces.
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify">
                 Originally crafting wooden garden benches, Steve soon found himself drawn to metalwork. 
                 <em className="text-amber-300"> "These were big and cumbersome,"</em> he recalls. 
                 <em className="text-amber-300"> "I had a friend who traded at markets and asked his advice on what products 
@@ -160,7 +160,7 @@ export default function Home() {
                 I already had all the necessary tools, so I started researching metal as a medium."</em>
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed">
+              <p className="text-lg text-gray-200 leading-relaxed text-justify">
                 Inspired by the shapes and textures of salvaged materials, Steve continues to experiment 
                 and innovate with every project, seeing potential where others see waste.
               </p>
