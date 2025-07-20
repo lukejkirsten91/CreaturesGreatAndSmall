@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
 interface ImageData {
@@ -17,6 +17,9 @@ interface ImageGalleryProps {
 export default function ImageGallery({ images }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  const imageRef = useRef<HTMLDivElement>(null)
 
   const nextImage = useCallback(() => {
     setSelectedIndex((prev) => (prev + 1) % images.length)
@@ -32,7 +35,26 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
     if (e.key === 'Escape') setIsFullscreen(false)
   }, [nextImage, prevImage])
 
-  React.useEffect(() => {
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0)
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) nextImage()
+    if (isRightSwipe) prevImage()
+  }
+
+  useEffect(() => {
     if (isFullscreen) {
       document.addEventListener('keydown', handleKeyDown)
       document.body.style.overflow = 'hidden'
@@ -54,8 +76,12 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         {/* Featured Image */}
         <div className="relative">
           <div 
-            className="relative aspect-square md:aspect-[4/3] max-w-4xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden cursor-pointer group"
+            ref={imageRef}
+            className="relative aspect-square md:aspect-[4/3] max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group"
             onClick={() => setIsFullscreen(true)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             <Image
               src={images[selectedIndex].src}
@@ -66,16 +92,16 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               priority
             />
             
-            {/* Navigation Arrows */}
+            {/* Always Visible Navigation Arrows */}
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 prevImage()
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-3 shadow-lg transition-all opacity-0 group-hover:opacity-100"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 md:p-3 shadow-lg transition-all z-10"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
@@ -84,27 +110,29 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                 e.stopPropagation()
                 nextImage()
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-3 shadow-lg transition-all opacity-0 group-hover:opacity-100"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 md:p-3 shadow-lg transition-all z-10"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
               </svg>
             </button>
 
             {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full text-sm">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
               {selectedIndex + 1} / {images.length}
+            </div>
+
+            {/* Swipe Indicator (Mobile) */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs md:hidden">
+              Swipe to navigate
             </div>
           </div>
 
           {/* Image Title */}
           <div className="text-center mt-6">
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-100 mb-2">
               {images[selectedIndex].title}
             </h3>
-            <p className="text-gray-600">
-              Handcrafted from reclaimed Knysna railway materials
-            </p>
           </div>
         </div>
 
@@ -115,10 +143,10 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
               <button
                 key={image.id}
                 onClick={() => setSelectedIndex(index)}
-                className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all ${
+                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all ${
                   index === selectedIndex 
-                    ? 'ring-4 ring-amber-500 scale-110' 
-                    : 'opacity-70 hover:opacity-100 hover:scale-105'
+                    ? 'ring-4 ring-amber-400 scale-110' 
+                    : 'opacity-60 hover:opacity-100 hover:scale-105'
                 }`}
               >
                 <Image
@@ -136,11 +164,16 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 
       {/* Fullscreen Modal */}
       {isFullscreen && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center">
+        <div 
+          className="fixed inset-0 bg-black z-50 flex items-center justify-center"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Close Button */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white rounded-full p-3 transition-all z-10"
+            className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 transition-all z-10"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -161,25 +194,32 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           {/* Fullscreen Navigation */}
           <button
             onClick={prevImage}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 transition-all"
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 md:p-4 transition-all z-10"
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           
           <button
             onClick={nextImage}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white rounded-full p-4 transition-all"
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 md:p-4 transition-all z-10"
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
             </svg>
           </button>
 
           {/* Fullscreen Counter */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/20 text-white px-6 py-3 rounded-full">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-6 py-3 rounded-full">
             {selectedIndex + 1} / {images.length}
+          </div>
+
+          {/* Title in Fullscreen */}
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-center">
+            <h3 className="text-xl md:text-2xl font-bold text-white">
+              {images[selectedIndex].title}
+            </h3>
           </div>
         </div>
       )}
