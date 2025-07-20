@@ -80,18 +80,18 @@ export default function Home() {
             The Foundation: Historic Railway Screws
           </h2>
           <div className="bg-gray-900/60 backdrop-blur-sm rounded-lg p-8 max-w-3xl mx-auto shadow-2xl">
-            <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-6 text-justify">
+            <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-6">
               Each sculpture in the Railway People collection is built upon authentic hardware 
               from the historic Knysna railway line - a vital transportation link that connected 
               coastal communities across the Garden Route of South Africa.
             </p>
-            <p className="text-lg text-gray-300 leading-relaxed mb-6 text-justify">
+            <p className="text-lg text-gray-300 leading-relaxed mb-6">
               When the railway was decommissioned, these screws and bolts were destined for 
               scrapyards. Instead, they found new purpose as the foundation for artistic expression. 
               <strong className="text-amber-400"> Each screw bears a unique number</strong>, 
               a testament to its industrial heritage and the meticulous craftsmanship of a bygone era.
             </p>
-            <p className="text-lg text-gray-300 leading-relaxed text-justify">
+            <p className="text-lg text-gray-300 leading-relaxed">
               By transforming these forgotten pieces of infrastructure into art, we preserve 
               not just metal, but memories - giving new life to the industrial soul of South Africa.
             </p>
@@ -139,13 +139,13 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Story Column */}
             <div className="space-y-6">
-              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
+              <p className="text-lg text-gray-200 leading-relaxed story-animate">
                 With an eye for detail and a love for craftsmanship, Steve Kirsten transforms discarded 
                 metal into imaginative sculptures and unique works of art. From small, intricate figures 
                 to larger statement pieces, each creation carries its own personality and charm.
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
+              <p className="text-lg text-gray-200 leading-relaxed story-animate">
                 Steve's journey began after qualifying at Saasveld Forestry College in 1977. 
                 <em className="text-amber-300"> "I was born in Benoni and completed my army training after school,"</em> he says. 
                 <em className="text-amber-300"> "I then operated a metal lathe in a steel factory to fund a few months of 
@@ -153,7 +153,7 @@ export default function Home() {
                 and discovered the immense satisfaction of turning scrap metal into extraordinary pieces.
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
+              <p className="text-lg text-gray-200 leading-relaxed story-animate">
                 Originally crafting wooden garden benches, Steve soon found himself drawn to metalwork. 
                 <em className="text-amber-300"> "These were big and cumbersome,"</em> he recalls. 
                 <em className="text-amber-300"> "I had a friend who traded at markets and asked his advice on what products 
@@ -161,7 +161,7 @@ export default function Home() {
                 I already had all the necessary tools, so I started researching metal as a medium."</em>
               </p>
               
-              <p className="text-lg text-gray-200 leading-relaxed text-justify story-animate">
+              <p className="text-lg text-gray-200 leading-relaxed story-animate">
                 Inspired by the shapes and textures of salvaged materials, Steve continues to experiment 
                 and innovate with every project, seeing potential where others see waste.
               </p>
