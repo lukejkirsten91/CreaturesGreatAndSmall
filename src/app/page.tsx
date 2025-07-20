@@ -1,5 +1,6 @@
 import ImageGallery from '@/components/features/ImageGallery'
 import CallToAction from '@/components/ui/CallToAction'
+import BackToTop from '@/components/ui/BackToTop'
 import Image from 'next/image'
 
 // Get all railway people images organized properly
@@ -251,6 +252,13 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Back to Top Section */}
+      <section className="py-8 px-4 border-t border-gray-700">
+        <div className="max-w-4xl mx-auto text-center">
+          <BackToTop />
         </div>
       </section>
     </main>
