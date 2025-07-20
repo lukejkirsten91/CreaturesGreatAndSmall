@@ -80,18 +80,18 @@ export default function Home() {
             The Foundation: Historic Railway Screws
           </h2>
           <div className="bg-gray-900/60 backdrop-blur-sm rounded-lg p-8 max-w-3xl mx-auto shadow-2xl">
-            <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-6">
+            <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-6 text-justify">
               Each sculpture in the Railway People collection is built upon authentic hardware 
               from the historic Knysna railway line - a vital transportation link that connected 
               coastal communities across the Garden Route of South Africa.
             </p>
-            <p className="text-lg text-gray-300 leading-relaxed mb-6">
+            <p className="text-lg text-gray-300 leading-relaxed mb-6 text-justify">
               When the railway was decommissioned, these screws and bolts were destined for 
               scrapyards. Instead, they found new purpose as the foundation for artistic expression. 
               <strong className="text-amber-400"> Each screw bears a unique number</strong>, 
               a testament to its industrial heritage and the meticulous craftsmanship of a bygone era.
             </p>
-            <p className="text-lg text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-300 leading-relaxed text-justify">
               By transforming these forgotten pieces of infrastructure into art, we preserve 
               not just metal, but memories - giving new life to the industrial soul of South Africa.
             </p>
