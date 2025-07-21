@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 interface ImageData {
   id: number
@@ -16,7 +17,6 @@ interface ImageGalleryProps {
 
 export default function ImageGallery({ images }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isFullscreen, setIsFullscreen] = useState(false)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
   const imageRef = useRef<HTMLDivElement>(null)
@@ -28,12 +28,6 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
   const prevImage = useCallback(() => {
     setSelectedIndex((prev) => (prev - 1 + images.length) % images.length)
   }, [images.length])
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'ArrowRight') nextImage()
-    if (e.key === 'ArrowLeft') prevImage()
-    if (e.key === 'Escape') setIsFullscreen(false)
-  }, [nextImage, prevImage])
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(0)
@@ -54,31 +48,15 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
     if (isRightSwipe) prevImage()
   }
 
-  useEffect(() => {
-    if (isFullscreen) {
-      document.addEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = 'unset'
-    }
-    
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = 'unset'
-    }
-  }, [isFullscreen, handleKeyDown])
-
   return (
     <>
       {/* Main Gallery */}
       <div className="space-y-8">
         {/* Featured Image */}
         <div className="relative">
-          <div 
-            ref={imageRef}
-            className="relative aspect-square md:aspect-[4/3] w-full max-w-sm md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group gallery-main"
-            onClick={() => setIsFullscreen(true)}
+          <Link 
+            href={`/gallery/${selectedIndex + 1}`}
+            className="block relative aspect-square md:aspect-[4/3] w-full max-w-sm md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group gallery-main"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -126,7 +104,7 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
             <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs md:hidden">
               Swipe to navigate
             </div>
-          </div>
+          </Link>
 
           {/* Image Title */}
           <div className="text-center mt-6">
@@ -140,9 +118,9 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         <div className="flex justify-center">
           <div className="flex gap-2 overflow-x-auto max-w-full pb-4">
             {images.map((image, index) => (
-              <button
+              <Link
                 key={image.id}
-                onClick={() => setSelectedIndex(index)}
+                href={`/gallery/${index + 1}`}
                 className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all thumbnail-animate ${
                   index === selectedIndex 
                     ? 'ring-4 ring-amber-400 scale-110' 
@@ -156,78 +134,11 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
                   className="object-cover"
                   sizes="80px"
                 />
-              </button>
+              </Link>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Fullscreen Modal */}
-      {isFullscreen && (
-        <div 
-          className="fixed inset-0 bg-black z-50 flex items-center justify-center"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Close Button - Extra Large for Mobile */}
-          <button
-            onClick={() => setIsFullscreen(false)}
-            className="absolute top-4 right-4 bg-red-500 hover:bg-red-600 text-white rounded-full w-16 h-16 md:w-14 md:h-14 flex items-center justify-center transition-all z-50 shadow-2xl border-4 border-white touch-manipulation"
-          >
-            <svg className="w-12 h-12 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={5} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          {/* Mobile: Close instruction - Always visible */}
-          <div className="absolute top-24 left-1/2 -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg text-lg font-bold md:hidden shadow-xl">
-            TAP RED × TO CLOSE
-          </div>
-
-          {/* Fullscreen Image */}
-          <div className="relative w-full h-full max-w-6xl max-h-[90vh] mx-4">
-            <Image
-              src={images[selectedIndex].src}
-              alt={images[selectedIndex].alt}
-              fill
-              className="object-contain"
-              sizes="100vw"
-            />
-          </div>
-
-          {/* Fullscreen Navigation */}
-          <button
-            onClick={prevImage}
-            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 md:p-4 transition-all z-10"
-          >
-            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          
-          <button
-            onClick={nextImage}
-            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 md:p-4 transition-all z-10"
-          >
-            <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-
-          {/* Fullscreen Counter */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-6 py-3 rounded-full">
-            {selectedIndex + 1} / {images.length}
-          </div>
-
-          {/* Title in Fullscreen */}
-          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-center">
-            <h3 className="text-xl md:text-2xl font-bold text-white">
-              {images[selectedIndex].title}
-            </h3>
-          </div>
-        </div>
-      )}
     </>
   )
 }
