@@ -7,21 +7,39 @@ import Image from 'next/image'
 const getRailwayImages = () => {
   // Start with The Screw, then other figures, end with The Gang
   const imageFiles = [
-    'The Screw.jpg',
-    'Bike Man.jpg',
-    'Canoe Man.jpg',
-    'Fisherman.jpg',
-    'Golf Man (After).jpg',
-    'Golf Man (Before).jpg',
-    'Guitar Man.jpg',
-    'Lean Man.jpg',
-    'Prayer Man.jpg',
-    'The Gang.jpg',
+    'The Screw.jpeg',
+    'Canoe Man.jpeg',
+    'Climbing Man.jpeg',
+    'Dancing Man.jpeg',
+    'Fisher Man 1 (before).jpeg',
+    'Fisher Man 2 (after) - with label.jpeg',
+    'Fisher Man 2 (after).jpeg',
+    'From the Top.jpeg',
+    'Golf Series 1 (before).jpeg',
+    'Golf Series 2 (during).jpeg',
+    'Golf Series 3 (after).jpeg',
+    'Guitar Man.jpeg',
+    'Leaning Man with Screws.jpeg',
+    'Leaning Man.jpeg',
+    'Love.jpeg',
+    'Olympian Series - Bicycle Man.jpeg',
+    'Olympian Series - Canoe Man.jpeg',
+    'Olympian Series - Discus Man.jpeg',
+    'Olympian Series - Javelin Man.jpeg',
+    'Paddle Boat Man.jpeg',
+    'Prayer Man.jpeg',
+    'Prayer Series - Candle Man.jpeg',
+    'Prayer Series - Prayer Man (from top).jpeg',
+    'Prayer Series - Prayer Man.jpeg',
+    'See, Hear, Say Men.jpeg',
+    'Surfer Man.jpeg',
+    'Walker Man.jpeg',
+    'The Gang.jpeg',
   ]
   
   return imageFiles.map((filename, index) => {
-    // Clean up the filename for the title (remove .jpg and clean up naming)
-    let title = filename.replace('.jpg', '')
+    // Clean up the filename for the title (remove .jpeg and clean up naming)
+    let title = filename.replace('.jpeg', '')
     
     return {
       id: index + 1,
@@ -88,8 +106,8 @@ export default function Home() {
             <p className="text-lg text-gray-300 leading-relaxed mb-6">
               When the railway was decommissioned, these screws and bolts were destined for 
               scrapyards. Instead, they found new purpose as the foundation for artistic expression. 
-              <strong className="text-amber-400"> Each screw bears a unique number</strong>, 
-              a testament to its industrial heritage and the meticulous craftsmanship of a bygone era.
+              <strong className="text-amber-400"> Each screw bears the date of manufacture</strong>, 
+              with the earliest discovered dating back to 1921 - a testament to its industrial heritage and the meticulous craftsmanship of a bygone era.
             </p>
             <p className="text-lg text-gray-300 leading-relaxed">
               By transforming these forgotten pieces of infrastructure into art, we preserve 
@@ -161,7 +179,7 @@ export default function Home() {
               </p>
               
               <p className="text-lg text-gray-200 leading-relaxed story-animate">
-                Steve's journey began after qualifying at Saasveld Forestry College in 1977. 
+                Steve's journey began after qualifying as a forester at Saasveld Forestry College in 1974. 
                 <em className="text-amber-300"> "I was born in Benoni and completed my army training after school,"</em> he says. 
                 <em className="text-amber-300"> "I then operated a metal lathe in a steel factory to fund a few months of 
                 hitchhiking across Europe."</em> Years later, he returned to his roots on the Garden Route 

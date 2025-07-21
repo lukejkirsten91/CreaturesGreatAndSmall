@@ -170,15 +170,20 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Close Button - Simple Cross */}
+          {/* Close Button - Simple Cross - Mobile Optimized */}
           <button
             onClick={() => setIsFullscreen(false)}
-            className="absolute top-6 right-6 bg-white hover:bg-gray-100 text-black rounded-full w-12 h-12 flex items-center justify-center transition-all z-10 shadow-2xl border-2 border-gray-200"
+            className="absolute top-4 right-4 md:top-6 md:right-6 bg-white hover:bg-gray-100 text-black rounded-full w-14 h-14 md:w-12 md:h-12 flex items-center justify-center transition-all z-50 shadow-2xl border-2 border-gray-200 touch-manipulation"
           >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-10 h-10 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+
+          {/* Mobile: Close instruction */}
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm md:hidden">
+            Tap × to close
+          </div>
 
           {/* Fullscreen Image */}
           <div className="relative w-full h-full max-w-6xl max-h-[90vh] mx-4">
