@@ -67,22 +67,24 @@ export default async function FullscreenGalleryPage({ params }: PageProps) {
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-      {/* Navigation */}
+      {/* Navigation - Subtle with fade animation */}
       <Link
         href={`/gallery/${prevIndex + 1}`}
-        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 md:p-4 transition-all z-10"
+        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 md:p-4 transition-all duration-300 z-10 opacity-30 hover:opacity-100 backdrop-blur-sm animate-pulse"
+        style={{ animationDuration: '4s' }}
       >
         <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </Link>
       
       <Link
         href={`/gallery/${nextIndex + 1}`}
-        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-3 md:p-4 transition-all z-10"
+        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white rounded-full p-3 md:p-4 transition-all duration-300 z-10 opacity-30 hover:opacity-100 backdrop-blur-sm animate-pulse"
+        style={{ animationDuration: '4s' }}
       >
         <svg className="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </Link>
 
@@ -98,14 +100,14 @@ export default async function FullscreenGalleryPage({ params }: PageProps) {
         />
       </div>
 
-      {/* Image Info */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-black/70 text-white px-6 py-3 rounded-full">
+      {/* Image Counter - Always visible */}
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 bg-black/70 text-white px-6 py-3 rounded-full">
         {currentIndex + 1} / {images.length}
       </div>
 
-      {/* Title */}
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-center">
-        <h1 className="text-xl md:text-2xl font-bold text-white">
+      {/* Title - Under counter for better visibility */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center max-w-[90vw]">
+        <h1 className="text-lg md:text-xl font-bold text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
           {currentImage.title}
         </h1>
       </div>
