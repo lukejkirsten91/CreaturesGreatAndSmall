@@ -21,7 +21,7 @@ export default function InstagramFeed() {
   }, [])
 
   return (
-    <section className="py-16 px-4 bg-gray-900/40 backdrop-blur-sm section-animate">
+    <section className="py-16 px-4 bg-gray-900/40 backdrop-blur-sm section-animate w-full overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -34,7 +34,7 @@ export default function InstagramFeed() {
         </div>
         
         {/* Instagram Feed Widget */}
-        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg p-6 shadow-2xl">
+        <div className="bg-gray-800/60 backdrop-blur-sm rounded-lg p-6 shadow-2xl w-full overflow-x-hidden">
           <div 
             className="elfsight-app-3ccc3db3-1260-46f2-a57e-7e42959ad8ce" 
             data-elfsight-app-lazy

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code for Creatures Great and Small</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .qr-code {
+            margin: 1rem 0;
+        }
+        .url {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 1rem;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code for Creatures Great and Small</h1>
+        <div class="url">https://www.creaturesgreatandsmall.shop</div>
+        <div class="qr-code">
+            <img id="qrcode" src="" alt="QR Code" style="max-width: 300px; height: auto;">
+        </div>
+        <button class="download-btn" onclick="downloadQR()">Download QR Code</button>
+    </div>
+
+    <script>
+        // Generate QR code using QR Server API
+        const url = 'https://www.creaturesgreatandsmall.shop';
+        const qrSize = 300;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(url)}`;
+        
+        document.getElementById('qrcode').src = qrUrl;
+        
+        function downloadQR() {
+            const link = document.createElement('a');
+            link.href = qrUrl;
+            link.download = 'creaturesgreatandsmall-qr-code.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

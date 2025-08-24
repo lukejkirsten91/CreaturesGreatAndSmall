@@ -115,8 +115,8 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
         </div>
 
         {/* Thumbnail Navigation */}
-        <div className="flex justify-center">
-          <div className="flex gap-2 overflow-x-auto max-w-full pb-4">
+        <div className="flex justify-center w-full overflow-x-hidden">
+          <div className="flex gap-2 overflow-x-auto max-w-full pb-4 px-4">
             {images.map((image, index) => (
               <Link
                 key={image.id}

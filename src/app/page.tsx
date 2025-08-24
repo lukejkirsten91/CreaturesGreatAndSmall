@@ -55,11 +55,11 @@ export default function Home() {
   const images = getRailwayImages()
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black w-full overflow-x-hidden">
       {/* Hero Section with Image */}
-      <section className="relative min-h-screen flex items-center justify-center">
+      <section className="relative min-h-screen flex items-center justify-center w-full overflow-hidden">
         {/* Hero Background Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 w-full h-full overflow-hidden">
           <Image
             src="/images/hero/20250720_114142.jpg"
             alt="Railway People sculptures hero image"
@@ -93,7 +93,7 @@ export default function Home() {
       </section>
 
       {/* The Screw Heritage Section */}
-      <section className="py-16 px-4 bg-gray-800/80 backdrop-blur-sm section-animate">
+      <section className="py-16 px-4 bg-gray-800/80 backdrop-blur-sm section-animate w-full overflow-x-hidden">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
             The Foundation: Historic Railway Screws
@@ -119,7 +119,7 @@ export default function Home() {
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="py-16 px-4 section-animate">
+      <section id="gallery" className="py-16 px-4 section-animate w-full overflow-x-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
@@ -139,7 +139,7 @@ export default function Home() {
       <InstagramFeed />
 
       {/* About Section */}
-      <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm section-animate">
+      <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm section-animate w-full overflow-x-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-8">
@@ -248,7 +248,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-16 px-4 contact-animate">
+      <section id="contact" className="py-16 px-4 contact-animate w-full overflow-x-hidden">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
             Connect & Collect
@@ -293,7 +293,7 @@ export default function Home() {
       </section>
 
       {/* Back to Top Section */}
-      <section className="py-8 px-4 border-t border-gray-700">
+      <section className="py-8 px-4 border-t border-gray-700 w-full overflow-x-hidden">
         <div className="max-w-4xl mx-auto text-center">
           <BackToTop />
         </div>
