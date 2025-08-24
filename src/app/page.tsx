@@ -1,4 +1,5 @@
 import ImageGallery from '@/components/features/ImageGallery'
+import InstagramFeed from '@/components/features/InstagramFeed'
 import CallToAction from '@/components/ui/CallToAction'
 import BackToTop from '@/components/ui/BackToTop'
 import Image from 'next/image'
@@ -133,6 +134,9 @@ export default function Home() {
           <ImageGallery images={images} />
         </div>
       </section>
+
+      {/* Instagram Feed Section */}
+      <InstagramFeed />
 
       {/* About Section */}
       <section className="py-16 px-4 bg-gray-800/60 backdrop-blur-sm section-animate">
