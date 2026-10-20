@@ -1,96 +1,55 @@
-# Creatures Great and Small - Website Project
+# Creatures Great and Small
 
-**IMPORTANT: Always read and update this document after each development step.**
+Last updated: 20 October 2026.
 
-## Project Overview
-A beautiful, modern website showcasing a South African artisan's scrap metal creatures. The site will feature his story, creations, and integrate with Instagram to display his latest work.
+This is Steve Kirsten’s sculpture portfolio, including the Railway People made from reclaimed Knysna railway hardware.
 
-## Key Features
-- About page highlighting the artisan's story and trade
-- Gallery showcasing scrap metal creatures
-- Special collection: "The Railway People" (made from reclaimed Knysna railway screws)
-- Instagram feed integration with captions
-- Contact functionality via email
-- Social sharing capabilities (like/share Instagram posts)
-- Mobile-first responsive design
+## Hosting
 
-## Tech Stack
-- **Frontend**: Next.js with TypeScript and React
-- **Database**: Supabase
-- **Hosting**: Vercel (auto-deploy from main branch)
-- **Version Control**: GitHub
-- **Email**: Resend + Supabase built-in email
-- **Styling**: TailwindCSS (responsive/mobile-first)
+- Public address: https://creatures-great-and-small.vercel.app
+- The former creaturesgreatandsmall.shop domain has expired. Do not use it in links or canonical metadata.
+- GitHub main is connected to the existing Vercel project and triggers production deployment.
+- Vercel serves the `out` directory as plain static files (`framework: null`). No Next.js server is deployed.
+- Node 22 is configured for Vercel builds.
 
-## Development Workflow
-1. **Always check TypeScript errors** before pushing: `npm run type-check`
-2. **Test on live Vercel domain** (not local development)
-3. **Push to main branch** triggers auto-deployment
-4. **Update this document** after each major step
-5. **Follow separation of concerns** - keep presentation, business logic, and data access separate
+## Design
 
-## Project Structure Guidelines
-```
-/src
-  /app                 # Next.js app router pages
-  /components          # Reusable UI components
-    /ui               # Basic UI elements (buttons, cards, etc.)
-    /features         # Feature-specific components
-  /lib                 # Business logic and utilities
-  /services           # Data access layer (Supabase, APIs)
-  /types              # TypeScript type definitions
-  /styles             # Global styles
-/public
-  /images             # Static images
-  /railway-people     # The Railway People collection images
-```
+- White gallery space, forest green #173c32, mist #f1f4f1, sage #e3ebd5, muted text #5a6b63.
+- Locally hosted Bricolage Grotesque display typography and DM Sans body typography.
+- The original sculpture photographs are the visual focus: a large interactive hero, a filterable gallery, material story, maker portrait, and direct email contact.
+- Motion includes coordinated hero entrances, pointer response, a moving craft ribbon, scroll reveals, a rotating railway screw, gallery transitions, and a native modal viewer. Respect reduced motion and the persistent pause control.
+- Every original gallery ID 1–28 remains supported. Never reorder those IDs.
+- Avoid fabricated claims, testimonials, pricing, availability, market schedules, or social accounts. The known contact address is stavroskirsten@gmail.com.
 
-## Development Steps
+## Development and validation
 
-### Phase 1: Setup & Infrastructure
-- [ ] Create GitHub repository
-- [ ] Link to Vercel for auto-deployment
-- [ ] Initialize Next.js with TypeScript
-- [ ] Set up TailwindCSS
-- [ ] Configure Supabase connection
+Use Node 22 and `npm ci`.
 
-### Phase 2: Core Features
-- [ ] Create responsive layout and navigation
-- [ ] Build About page with artisan's story
-- [ ] Implement image gallery with Railway People collection
-- [ ] Integrate Instagram API for feed display
-- [ ] Add contact form functionality
+- `npm run dev`: prepare local image sizes and start Next development.
+- `npm run type-check`: required before committing.
+- `npm run build`: prepare responsive WebP files, export static HTML, externalize hydration scripts, and verify static/security invariants.
+- `npm start`: serve the exact export with production security headers for QA.
+- `npm run test:e2e`: desktop and mobile browser tests, including Axe accessibility checks. Install Chromium with `npx playwright install chromium` first.
+- Set TEST_BASE_URL to test a deployed site with the same browser checks.
 
-### Phase 3: Enhancement & Polish
-- [ ] Implement social sharing features
-- [ ] Add image optimization and loading states
-- [ ] Mobile optimization testing
-- [ ] Performance optimization
-- [ ] SEO optimization
+The project has no database, server-side form, API route, middleware, server action, analytics beacon, or remote social widget. Collection data is in src/lib/collection.ts. Original photographs remain in public/images; build output contains only compressed versions.
 
-### Phase 4: Deployment & Testing
-- [ ] Test all features on live Vercel domain
-- [ ] Cross-device testing
-- [ ] Final TypeScript error checking
-- [ ] Production deployment
+## Security and cost controls
 
-## Environment Setup Required
-- GitHub account and repository
-- Vercel account linked to GitHub
-- Supabase project
-- Instagram API credentials
-- Resend API key (for contact form)
+The user explicitly asked to reduce the risk of bots causing Vercel charges.
 
-## Testing Strategy
-- **Primary testing**: Live Vercel deployment
-- **Mobile testing**: Test on actual devices and browser dev tools
-- **TypeScript**: Run `npm run type-check` before all commits
-- **Performance**: Use Lighthouse for optimization
+- Keep `output: 'export'` and `images.unoptimized: true` in next.config.js.
+- Keep Vercel `framework: null` and `outputDirectory: out`. Do not deploy a server runtime.
+- Resize and compress images during the build. Never introduce /_next/image or a dynamic image service.
+- No third-party scripts or fonts. The previous Elfsight widget and placeholder Instagram links have been removed.
+- The strict production CSP allows scripts only from this origin, without unsafe-inline or unsafe-eval. Inline style permission is used for animation and React style attributes.
+- scripts/finalize-static.mjs moves deterministic Next hydration scripts into content-hashed external files before deployment. Verify this with real browsers after framework updates.
+- vercel.json sets CSP, frame protection, content-type protection, referrer policy, permissions policy, HSTS, and asset caching.
+- npm overrides patch the build-time PostCSS and Sharp dependencies. Keep npm audit clean when updating.
+- Static CDN requests and bandwidth can still be billed on a paid Vercel plan. Static export is not a spending cap or bot blocker.
+- Account firewall and Spend Management require authenticated Vercel access. The saved CLI token was expired during this task; a connection was requested. Do not claim bot rules or automatic pausing are enabled without reading and verifying those settings.
+- Vercel’s automatic spending pause can affect all projects on a team. Confirm scope and threshold with the owner before changing team-wide billing behavior.
 
-## Current Project Status
-- **Phase**: Setup & Planning
-- **Next Step**: Create GitHub repository and link to Vercel
-- **Last Updated**: [Date to be updated after each step]
+## Verification status
 
----
-*This document should be updated after every development milestone to track progress and maintain project context.*
+Local production build, static/security invariant checks, TypeScript checking, and all four Playwright desktop/mobile tests passed. Axe reported no violations on the homepage, modal, story pages, or sculpture detail page. Browser tests confirmed no external requests or JavaScript errors and no horizontal overflow at 320, 375, 390, 768, 1024, and 1440 pixels. npm installation audit: zero known vulnerabilities. Live deployment verification is the remaining step.

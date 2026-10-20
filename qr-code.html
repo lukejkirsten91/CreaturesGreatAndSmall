@@ -54,7 +54,7 @@
 <body>
     <div class="container">
         <h1>QR Code for Creatures Great and Small</h1>
-        <div class="url">https://www.creaturesgreatandsmall.shop</div>
+        <div class="url">https://creatures-great-and-small.vercel.app</div>
         <div class="qr-code">
             <img id="qrcode" src="" alt="QR Code" style="max-width: 300px; height: auto;">
         </div>
@@ -63,7 +63,7 @@
 
     <script>
         // Generate QR code using QR Server API
-        const url = 'https://www.creaturesgreatandsmall.shop';
+        const url = 'https://creatures-great-and-small.vercel.app';
         const qrSize = 300;
         const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(url)}`;
         

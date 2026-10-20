@@ -1,157 +1,35 @@
 'use client'
-
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger)
-}
+gsap.registerPlugin(ScrollTrigger)
 
 export default function ScrollAnimations() {
-  useLayoutEffect(() => {
-    if (typeof window === 'undefined') return
-
-    // Hero content fade in
-    gsap.fromTo('.hero-content', {
-      opacity: 0,
-      y: 50
-    }, {
-      opacity: 1,
-      y: 0,
-      duration: 1.5,
-      ease: 'power2.out'
-    })
-
-    // Section fade-ins
-    gsap.fromTo('.section-animate', {
-      opacity: 0,
-      y: 80
-    }, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.section-animate',
-        start: 'top 80%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Quote animation
-    gsap.fromTo('.quote-animate', {
-      opacity: 0,
-      scale: 0.9,
-      y: 30
-    }, {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      duration: 1.2,
-      ease: 'back.out(1.7)',
-      scrollTrigger: {
-        trigger: '.quote-animate',
-        start: 'top 75%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Gallery main image animation
-    gsap.fromTo('.gallery-main', {
-      opacity: 0,
-      scale: 0.95,
-      y: 40
-    }, {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      duration: 1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.gallery-main',
-        start: 'top 70%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Thumbnail animations
-    gsap.fromTo('.thumbnail-animate', {
-      opacity: 0,
-      y: 20,
-      scale: 0.9
-    }, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.6,
-      stagger: 0.05,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.thumbnail-animate',
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Info boxes slide in
-    gsap.fromTo('.info-box-animate', {
-      opacity: 0,
-      x: 50,
-      y: 30
-    }, {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.info-box-animate',
-        start: 'top 75%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Story text reveals
-    gsap.fromTo('.story-animate', {
-      opacity: 0,
-      x: -30
-    }, {
-      opacity: 1,
-      x: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.story-animate',
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    // Contact section animation
-    gsap.fromTo('.contact-animate', {
-      opacity: 0,
-      y: 50
-    }, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: '.contact-animate',
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      }
-    })
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  const pathname = usePathname()
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    let context: gsap.Context | undefined
+    const setup = () => {
+      context?.revert()
+      if (media.matches || document.documentElement.dataset.motion === 'off') return
+      context = gsap.context(() => {
+        gsap.from('.hero-line > span', { yPercent: 110, rotate: 3, duration: 1.15, stagger: .13, ease: 'power4.out', delay: .08 })
+        gsap.from('.hero-intro, .hero-description, .hero-cta, .hero-signoff', { opacity: 0, y: 16, duration: .85, stagger: .1, delay: .25, ease: 'power2.out' })
+        gsap.from('.hero-orbit', { scale: .6, opacity: 0, duration: 1.4, ease: 'power3.out' })
+        gsap.from('.hero-stamp', { scale: .6, rotation: -25, opacity: 0, duration: 1, delay: .45, ease: 'back.out(1.5)' })
+        document.querySelectorAll<HTMLElement>('[data-reveal]').forEach(element => {
+          gsap.from(element, { clipPath: 'inset(0 0 100% 0)', y: 25, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 92%', once: true } })
+        })
+        if (document.querySelector('.screw-image')) gsap.fromTo('.screw-image', { rotate: -12, y: 30 }, { rotate: 5, y: -25, ease: 'none', scrollTrigger: { trigger: '.heritage-art', start: 'top bottom', end: 'bottom top', scrub: 1 } })
+        if (document.querySelector('.group-image')) gsap.fromTo('.group-image', { scale: .9 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.group-section', start: 'top bottom', end: 'center center', scrub: 1 } })
+      })
+      ScrollTrigger.refresh()
     }
-  }, [])
-
+    let cancelled = false
+    document.fonts.ready.then(() => { if (!cancelled) setup() })
+    window.addEventListener('motionpreferencechange', setup); media.addEventListener('change', setup)
+    return () => { cancelled = true; context?.revert(); window.removeEventListener('motionpreferencechange', setup); media.removeEventListener('change', setup) }
+  }, [pathname])
   return null
 }

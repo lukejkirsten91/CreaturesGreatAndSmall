@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['instagram.com', 'scontent.cdninstagram.com'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**.cdninstagram.com',
-      },
-    ],
-  },
+  outputFileTracingRoot: __dirname,
+  output: 'export',
+  trailingSlash: true,
+  poweredByHeader: false,
+  images: { unoptimized: true },
+  productionBrowserSourceMaps: false,
 }
 
 module.exports = nextConfig

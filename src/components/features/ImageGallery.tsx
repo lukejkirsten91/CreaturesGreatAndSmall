@@ -1,144 +1,75 @@
 'use client'
-
-import React, { useState, useCallback, useRef } from 'react'
-import Image from 'next/image'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import ArtImage from '@/components/ui/ArtImage'
+import { ArrowIcon, CloseIcon } from '@/components/ui/Icons'
+import { categories, Category, enquiryUrl, gallerySculptures, Sculpture } from '@/lib/collection'
 
-interface ImageData {
-  id: number
-  src: string
-  alt: string
-  title: string
-}
-
-interface ImageGalleryProps {
-  images: ImageData[]
-}
-
-export default function ImageGallery({ images }: ImageGalleryProps) {
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [touchStart, setTouchStart] = useState(0)
-  const [touchEnd, setTouchEnd] = useState(0)
-  const imageRef = useRef<HTMLDivElement>(null)
-
-  const nextImage = useCallback(() => {
-    setSelectedIndex((prev) => (prev + 1) % images.length)
-  }, [images.length])
-
-  const prevImage = useCallback(() => {
-    setSelectedIndex((prev) => (prev - 1 + images.length) % images.length)
-  }, [images.length])
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(0)
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe) nextImage()
-    if (isRightSwipe) prevImage()
-  }
-
-  return (
-    <>
-      {/* Main Gallery */}
-      <div className="space-y-8">
-        {/* Featured Image */}
-        <div className="relative">
-          <Link 
-            href={`/gallery/${selectedIndex + 1}`}
-            className="block relative aspect-square md:aspect-[4/3] w-full max-w-sm md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden cursor-pointer group gallery-main"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            <Image
-              src={images[selectedIndex].src}
-              alt={images[selectedIndex].alt}
-              fill
-              className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 768px) 100vw, 80vw"
-              priority
-            />
-            
-            {/* Always Visible Navigation Arrows */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                prevImage()
-              }}
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 md:p-3 shadow-lg transition-all z-10"
-            >
-              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                nextImage()
-              }}
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black/80 text-white rounded-full p-2 md:p-3 shadow-lg transition-all z-10"
-            >
-              <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm">
-              {selectedIndex + 1} / {images.length}
-            </div>
-
-            {/* Swipe Indicator (Mobile) */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-xs md:hidden">
-              Swipe to navigate
-            </div>
-          </Link>
-
-          {/* Image Title */}
-          <div className="text-center mt-6">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-100 mb-2">
-              {images[selectedIndex].title}
-            </h3>
-          </div>
-        </div>
-
-        {/* Thumbnail Navigation */}
-        <div className="flex justify-center w-full overflow-x-hidden">
-          <div className="flex gap-2 overflow-x-auto max-w-full pb-4 px-4">
-            {images.map((image, index) => (
-              <Link
-                key={image.id}
-                href={`/gallery/${index + 1}`}
-                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all thumbnail-animate ${
-                  index === selectedIndex 
-                    ? 'ring-4 ring-amber-400 scale-110' 
-                    : 'opacity-60 hover:opacity-100 hover:scale-105'
-                }`}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  className="object-cover"
-                  sizes="80px"
-                />
-              </Link>
-            ))}
-          </div>
-        </div>
+export default function ImageGallery({ expanded = false }: { expanded?: boolean }) {
+  const [category, setCategory] = useState<Category>('All characters')
+  const [showAll, setShowAll] = useState(expanded)
+  const [selected, setSelected] = useState<Sculpture | null>(null)
+  const [direction, setDirection] = useState(1)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLElement | null>(null)
+  const touchStart = useRef<{ x: number; y: number } | null>(null)
+  const filtered = useMemo(() => category === 'All characters' ? gallerySculptures : gallerySculptures.filter(piece => piece.category === category), [category])
+  const visible = showAll ? filtered : filtered.slice(0, 6)
+  const close = useCallback(() => { dialogRef.current?.close(); setSelected(null); triggerRef.current?.focus({ preventScroll: true }) }, [])
+  const navigate = useCallback((step: number) => {
+    setDirection(step)
+    setSelected(current => {
+      const index = filtered.findIndex(piece => piece.id === current?.id)
+      return filtered[(index + step + filtered.length) % filtered.length]
+    })
+  }, [filtered])
+  const isOpen = selected !== null
+  useEffect(() => {
+    if (!isOpen) return
+    dialogRef.current?.showModal(); closeRef.current?.focus()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') { event.preventDefault(); navigate(1) }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); navigate(-1) }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener('keydown', onKey) }
+  }, [isOpen, navigate])
+  return <>
+    <div className="gallery-tools">
+      <div className="gallery-filters" role="group" aria-label="Filter sculptures">
+        {categories.map(item => <button key={item} onClick={() => { setCategory(item); setShowAll(expanded) }} aria-pressed={category === item} className={category === item ? 'is-active' : ''}>{item}</button>)}
       </div>
-    </>
-  )
+      <span className="gallery-count" role="status">{filtered.length} photographs</span>
+    </div>
+    <div className="gallery-grid" key={category}>
+      {visible.map((piece, index) => <button className="art-card" key={piece.id} onClick={event => { triggerRef.current = event.currentTarget; setSelected(piece) }} style={{ '--card-delay': `${Math.min(index, 5) * 45}ms` } as React.CSSProperties} aria-label={`View ${piece.title}`}>
+        <div className={`art-card-image art-tone-${index % 3}`}><ArtImage sculpture={piece} sizes="(max-width: 560px) 88vw, (max-width: 900px) 45vw, 30vw" /><span className="art-open" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" stroke="currentColor" strokeWidth="1.5" /></svg></span></div>
+        <div className="art-card-caption"><div><h3>{piece.title}</h3><span>{piece.category}</span></div><ArrowIcon /></div>
+      </button>)}
+    </div>
+    {!showAll && filtered.length > 6 && <div className="gallery-more"><button className="button button-outline" onClick={() => setShowAll(true)}>View all {filtered.length} photographs <ArrowIcon /></button><span>A whole cast of characters is waiting.</span></div>}
+    <dialog ref={dialogRef} className="lightbox" aria-labelledby="lightbox-title" onCancel={event => { event.preventDefault(); close() }} onClick={event => { if (event.target === event.currentTarget) close() }}>
+      {selected && <div className="lightbox-inner">
+        <div className="lightbox-header"><span>The Railway People</span><button ref={closeRef} className="icon-button" onClick={close} aria-label="Close image viewer"><CloseIcon /></button></div>
+        <div className="lightbox-image" onTouchStart={event => { touchStart.current = { x: event.touches[0].clientX, y: event.touches[0].clientY } }} onTouchEnd={event => {
+          if (!touchStart.current) return
+          const dx = touchStart.current.x - event.changedTouches[0].clientX
+          const dy = touchStart.current.y - event.changedTouches[0].clientY
+          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) navigate(dx > 0 ? 1 : -1)
+          touchStart.current = null
+        }}>
+          <div key={selected.id} className={`lightbox-image-frame ${direction < 0 ? 'from-left' : ''}`}><ArtImage sculpture={selected} priority sizes="(max-width: 760px) 90vw, 65vw" /></div>
+          <button className="icon-button lightbox-prev" onClick={() => navigate(-1)} aria-label="Previous sculpture"><ArrowIcon /></button>
+          <button className="icon-button lightbox-next" onClick={() => navigate(1)} aria-label="Next sculpture"><ArrowIcon /></button>
+        </div>
+        <div className="lightbox-caption" aria-live="polite">
+          <div><span className="section-note">{filtered.findIndex(piece => piece.id === selected.id) + 1} / {filtered.length}</span><h2 id="lightbox-title">{selected.title}</h2><p>{selected.description}</p></div>
+          <div className="lightbox-links"><a className="button button-dark" href={enquiryUrl(selected.title)}>Enquire about this piece <ArrowIcon /></a><Link className="text-link" href={`/gallery/${selected.id}/`}>Open this sculpture’s page</Link></div>
+        </div>
+      </div>}
+    </dialog>
+  </>
 }

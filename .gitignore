@@ -43,3 +43,10 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Generated static media and local browser reports
+/public/images/optimized/
+/public/images/social.jpg
+/test-results/
+/playwright-report/
+/artifacts/
